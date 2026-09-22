@@ -838,9 +838,9 @@ function setupProjectsSection() {
     trigger: projectsEl,
     start: 'top 80%',
     end: 'bottom 20%',
-    onEnter: () => { preview.classList.add('visible'); _projectsVisible = true; },
+    onEnter: () => { if (!isMobileViewport()) preview.classList.add('visible'); _projectsVisible = true; },
     onLeave: () => { preview.classList.remove('visible'); _projectsVisible = false; },
-    onEnterBack: () => { preview.classList.add('visible'); _projectsVisible = true; },
+    onEnterBack: () => { if (!isMobileViewport()) preview.classList.add('visible'); _projectsVisible = true; },
     onLeaveBack: () => { preview.classList.remove('visible'); _projectsVisible = false; },
   });
 
@@ -881,7 +881,7 @@ function setupProjectsSection() {
       const itemCy = rect.top + rect.height / 2;
       const dist = Math.abs(itemCy - cy);
       
-      itemQuickX[i](Math.min(dist / halfH, 1) * 80);
+      itemQuickX[i](isMobileViewport() ? 0 : Math.min(dist / halfH, 1) * 80);
       
       if (dist < closestDist) { closestDist = dist; closestIdx = i; }
     });
@@ -1355,7 +1355,7 @@ function setupProjectsSection() {
   
   ; (function () {
     var arrow = document.getElementById('skills-arrow');
-    if (!arrow) return;
+    if (!arrow || isMobileViewport()) return;
 
     gsap.fromTo(arrow,
       { xPercent: 0 },
@@ -1447,7 +1447,7 @@ function setupProjectsSection() {
     tl.to([stTimeline, pctEl], { opacity: 0, duration: 0.08 }, 0.1);
 
     
-    gsap.set(title, { yPercent: 0, x: function () { return window.innerWidth * 1.1; } });
+    gsap.set(title, { yPercent: 0, x: function () { return isMobileViewport() ? 0 : window.innerWidth * 1.1; } });
     tl.to(title, {
       x: 0,
       duration: 0.3,
@@ -1659,8 +1659,11 @@ function setupProjectsSection() {
       img.src = src;
     }
 
-    loadAndRender('assets/images/footer/left.png', 'ascii-left', 80);
-    loadAndRender('assets/images/footer/right.png', 'ascii-right', 80);
+    if (!isMobileViewport()) {
+      loadAndRender('assets/images/footer/left.png', 'ascii-left', 80);
+      loadAndRender('assets/images/footer/right.png', 'ascii-right', 80);
+    }
+
 
     
     var asciiLeftWrap = document.querySelector('.footer-ascii.left');
