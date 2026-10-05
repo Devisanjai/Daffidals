@@ -1664,8 +1664,6 @@ function setupProjectsSection() {
       loadAndRender('assets/images/footer/right.png', 'ascii-right', 80);
     }
 
-
-    
     var asciiLeftWrap = document.querySelector('.footer-ascii.left');
     var asciiRightWrap = document.querySelector('.footer-ascii.right');
     if (asciiLeftWrap && asciiRightWrap) {
